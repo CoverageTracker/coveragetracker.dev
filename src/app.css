@@ -1,0 +1,164 @@
+@import 'tailwindcss';
+
+/* ============================================================
+   Coverage Tracker — marketing site styles
+   Tailwind v4 (CSS-first). Design tokens come from the
+   Coverage Tracker design system; theme scopes map the six
+   editor colorschemes (× light/dark) onto semantic tokens.
+   ============================================================ */
+
+/* ---------- Webfonts (copied from the dashboard codebase) ---------- */
+@font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('/fonts/inter-400.woff2') format('woff2'); }
+@font-face { font-family:'Inter'; font-style:normal; font-weight:500; font-display:swap; src:url('/fonts/inter-500.woff2') format('woff2'); }
+@font-face { font-family:'Inter'; font-style:normal; font-weight:600; font-display:swap; src:url('/fonts/inter-600.woff2') format('woff2'); }
+@font-face { font-family:'Inter'; font-style:normal; font-weight:700; font-display:swap; src:url('/fonts/inter-700.woff2') format('woff2'); }
+@font-face { font-family:'JetBrains Mono'; font-style:normal; font-weight:500; font-display:swap; src:url('/fonts/jetbrains-mono-500.woff2') format('woff2'); }
+@font-face { font-family:'JetBrains Mono'; font-style:normal; font-weight:600; font-display:swap; src:url('/fonts/jetbrains-mono-600.woff2') format('woff2'); }
+@font-face { font-family:'JetBrains Mono'; font-style:normal; font-weight:700; font-display:swap; src:url('/fonts/jetbrains-mono-700.woff2') format('woff2'); }
+
+/* ---------- Default palette: Catppuccin Mocha (dark) ----------
+   Lives on :root so the site renders correctly even before JS.
+   Theme scopes below override these via [data-theme][data-mode]. */
+:root {
+  --bg:#181825; --card:#1e1e2e; --elevated:#313244;
+  --text:#cdd6f4; --muted:#a6adc8; --border:#313244;
+  --primary:#89b4fa; --primary-fg:#11111b; --link:#89b4fa;
+  --chart-0:#89b4fa; --chart-1:#cba6f7; --chart-2:#94e2d5;
+  --status-pass:#a6e3a1; --status-warn:#f9e2af; --status-alert:#fab387; --status-fail:#f38ba8;
+}
+
+/* Derived tints — always computed from the active --primary so they
+   survive every theme switch (design system: ring = 30%, fill = 14%). */
+:root, [data-theme] {
+  --ring: color-mix(in srgb, var(--primary) 30%, transparent);
+  --accent-fill: color-mix(in srgb, var(--primary) 14%, transparent);
+}
+
+/* ---------- Theme scopes ---------- */
+/* Catppuccin */
+[data-theme='catppuccin'][data-mode='dark'] {
+  --bg:#181825; --card:#1e1e2e; --elevated:#313244;
+  --text:#cdd6f4; --muted:#a6adc8; --border:#313244;
+  --primary:#89b4fa; --primary-fg:#11111b; --link:#89b4fa;
+  --chart-0:#89b4fa; --chart-1:#cba6f7; --chart-2:#94e2d5;
+  --status-pass:#a6e3a1; --status-warn:#f9e2af; --status-alert:#fab387; --status-fail:#f38ba8;
+}
+[data-theme='catppuccin'][data-mode='light'] {
+  --bg:#eff1f5; --card:#ffffff; --elevated:#e6e9ef;
+  --text:#4c4f69; --muted:#6c6f85; --border:#ccd0da;
+  --primary:#1e66f5; --primary-fg:#ffffff; --link:#1e66f5;
+  --chart-0:#1e66f5; --chart-1:#8839ef; --chart-2:#179299;
+  --status-pass:#40a02b; --status-warn:#df8e1d; --status-alert:#fe640b; --status-fail:#d20f39;
+}
+/* Gruvbox */
+[data-theme='gruvbox'][data-mode='dark'] {
+  --bg:#1d2021; --card:#282828; --elevated:#3c3836;
+  --text:#ebdbb2; --muted:#a89984; --border:#3c3836;
+  --primary:#fabd2f; --primary-fg:#1d2021; --link:#83a598;
+  --chart-0:#fabd2f; --chart-1:#d3869b; --chart-2:#8ec07c;
+  --status-pass:#b8bb26; --status-warn:#fabd2f; --status-alert:#fe8019; --status-fail:#fb4934;
+}
+[data-theme='gruvbox'][data-mode='light'] {
+  --bg:#f2e5bc; --card:#fbf1c7; --elevated:#ebdbb2;
+  --text:#3c3836; --muted:#665c54; --border:#d5c4a1;
+  --primary:#076678; --primary-fg:#fbf1c7; --link:#076678;
+  --chart-0:#076678; --chart-1:#8f3f71; --chart-2:#427b58;
+  --status-pass:#79740e; --status-warn:#b57614; --status-alert:#af3a03; --status-fail:#9d0006;
+}
+/* Nord */
+[data-theme='nord'][data-mode='dark'] {
+  --bg:#2e3440; --card:#3b4252; --elevated:#434c5e;
+  --text:#eceff4; --muted:#aeb6c8; --border:#434c5e;
+  --primary:#88c0d0; --primary-fg:#2e3440; --link:#88c0d0;
+  --chart-0:#88c0d0; --chart-1:#b48ead; --chart-2:#a3be8c;
+  --status-pass:#a3be8c; --status-warn:#ebcb8b; --status-alert:#d08770; --status-fail:#bf616a;
+}
+[data-theme='nord'][data-mode='light'] {
+  --bg:#eceff4; --card:#ffffff; --elevated:#e5e9f0;
+  --text:#2e3440; --muted:#4c566a; --border:#d8dee9;
+  --primary:#5e81ac; --primary-fg:#ffffff; --link:#5e81ac;
+  --chart-0:#5e81ac; --chart-1:#b48ead; --chart-2:#a3be8c;
+  --status-pass:#a3be8c; --status-warn:#ebcb8b; --status-alert:#d08770; --status-fail:#bf616a;
+}
+/* Solarized */
+[data-theme='solarized'][data-mode='dark'] {
+  --bg:#002b36; --card:#073642; --elevated:#0a4250;
+  --text:#93a1a1; --muted:#839496; --border:#0d4a59;
+  --primary:#268bd2; --primary-fg:#fdf6e3; --link:#2aa198;
+  --chart-0:#268bd2; --chart-1:#d33682; --chart-2:#859900;
+  --status-pass:#859900; --status-warn:#b58900; --status-alert:#cb4b16; --status-fail:#dc322f;
+}
+[data-theme='solarized'][data-mode='light'] {
+  --bg:#eee8d5; --card:#fdf6e3; --elevated:#e7e0c9;
+  --text:#586e75; --muted:#657b83; --border:#ddd6c1;
+  --primary:#268bd2; --primary-fg:#fdf6e3; --link:#2aa198;
+  --chart-0:#268bd2; --chart-1:#d33682; --chart-2:#859900;
+  --status-pass:#859900; --status-warn:#b58900; --status-alert:#cb4b16; --status-fail:#dc322f;
+}
+/* Dracula (dark only) */
+[data-theme='dracula'][data-mode='dark'] {
+  --bg:#21222c; --card:#282a36; --elevated:#343746;
+  --text:#f8f8f2; --muted:#8a93c4; --border:#44475a;
+  --primary:#bd93f9; --primary-fg:#21222c; --link:#8be9fd;
+  --chart-0:#bd93f9; --chart-1:#ff79c6; --chart-2:#50fa7b;
+  --status-pass:#50fa7b; --status-warn:#f1fa8c; --status-alert:#ffb86c; --status-fail:#ff5555;
+}
+/* Tokyo Night (dark only) */
+[data-theme='tokyonight'][data-mode='dark'] {
+  --bg:#16161e; --card:#1a1b26; --elevated:#292e42;
+  --text:#c0caf5; --muted:#828bb8; --border:#292e42;
+  --primary:#7aa2f7; --primary-fg:#16161e; --link:#7dcfff;
+  --chart-0:#7aa2f7; --chart-1:#bb9af7; --chart-2:#9ece6a;
+  --status-pass:#9ece6a; --status-warn:#e0af68; --status-alert:#ff9e64; --status-fail:#f7768e;
+}
+
+/* ---------- Expose tokens to Tailwind utilities ----------
+   Enables bg-bg, text-text, text-muted, border-border, bg-card,
+   bg-primary, text-primary, font-mono, font-body, etc. */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-card: var(--card);
+  --color-elevated: var(--elevated);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-fg: var(--primary-fg);
+  --color-link: var(--link);
+  --color-chart-0: var(--chart-0);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-pass: var(--status-pass);
+  --color-warn: var(--status-warn);
+  --color-alert: var(--status-alert);
+  --color-fail: var(--status-fail);
+  --color-ring2: var(--ring);
+  --color-accent-fill: var(--accent-fill);
+
+  --font-body: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  --radius-token: 10px;
+}
+
+/* ---------- Base element styles ---------- */
+@layer base {
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  ::selection { background: var(--accent-fill); }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+  }
+}
+
+/* ---------- Small shared helpers ---------- */
+.mono { font-family: var(--font-mono); }
+.wrap { max-width: 1100px; margin: 0 auto; padding: 0 32px; }

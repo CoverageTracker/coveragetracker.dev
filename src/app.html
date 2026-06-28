@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="catppuccin" data-mode="dark" class="dark">
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="%sveltekit.assets%/logo-mark.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Self-hosted code coverage and quality tracking for GitHub repositories. Push metrics from CI, watch trends over time, and ship status badges — on your own infrastructure." />
+  <meta property="og:title" content="Coverage Tracker — self-hosted coverage & quality tracking" />
+  <meta property="og:description" content="Self-hosted code coverage and quality tracking for GitHub repositories." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://coveragetracker.dev" />
+  <!-- No-flash theme bootstrap: apply persisted theme before first paint. -->
+  <script>
+    (function () {
+      try {
+        var v = JSON.parse(localStorage.getItem('ct-theme') || '');
+        if (v && v.id && v.mode) {
+          var r = document.documentElement;
+          r.dataset.theme = v.id;
+          r.dataset.mode = v.mode;
+          r.classList.toggle('dark', v.mode === 'dark');
+        }
+      } catch (e) {}
+    })();
+  </script>
+  %sveltekit.head%
+</head>
+<body data-sveltekit-preload-data="hover">
+  <div style="display: contents">%sveltekit.body%</div>
+</body>
+</html>
