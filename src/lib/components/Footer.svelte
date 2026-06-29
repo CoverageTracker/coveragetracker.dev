@@ -16,7 +16,7 @@
         { label: 'Documentation', href: '/docs' },
         { label: 'Self-host guide', href: '/docs#prerequisites' },
         { label: 'API reference', href: '/docs#api' },
-        { label: 'Changelog', href: '#' }
+        { label: 'Changelog', href: 'https://github.com/CoverageTracker/coverage-tracker/releases' }
       ]
     },
     {
