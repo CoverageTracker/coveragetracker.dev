@@ -16,16 +16,16 @@
         { label: 'Documentation', href: '/docs' },
         { label: 'Self-host guide', href: '/docs#prerequisites' },
         { label: 'API reference', href: '/docs#api' },
-        { label: 'Changelog', href: 'https://github.com/CoverageTracker/coverage-tracker/releases' }
+        { label: 'Changelog', href: 'https://github.com/CoverageTracker/coverage-tracker/releases', external: true }
       ]
     },
     {
       head: 'Project',
       links: [
-        { label: 'GitHub', href: 'https://github.com/CoverageTracker/coverage-tracker' },
-        { label: 'Issues', href: 'https://github.com/CoverageTracker/coverage-tracker/issues' },
-        { label: 'Discussions', href: 'https://github.com/CoverageTracker/coverage-tracker/discussions' },
-        { label: 'License', href: 'https://github.com/CoverageTracker/coverage-tracker/blob/main/LICENSE' }
+        { label: 'GitHub', href: 'https://github.com/CoverageTracker/coverage-tracker', external: true },
+        { label: 'Issues', href: 'https://github.com/CoverageTracker/coverage-tracker/issues', external: true },
+        { label: 'Discussions', href: 'https://github.com/CoverageTracker/coverage-tracker/discussions', external: true },
+        { label: 'License', href: 'https://github.com/CoverageTracker/coverage-tracker/blob/main/LICENSE', external: true }
       ]
     }
   ];
@@ -40,7 +40,7 @@
     {#each cols as c}
       <div class="fcol">
         <h4 class="mono">{c.head}</h4>
-        {#each c.links as l}<a href={l.href}>{l.label}</a>{/each}
+        {#each c.links as l}<a href={l.href} target={l.external ? '_blank' : undefined} rel={l.external ? 'noopener noreferrer' : undefined}>{l.label}</a>{/each}
       </div>
     {/each}
   </div>
