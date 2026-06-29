@@ -23,9 +23,9 @@
       head: 'Project',
       links: [
         { label: 'GitHub', href: 'https://github.com/CoverageTracker/coverage-tracker' },
-        { label: 'Issues', href: '#' },
-        { label: 'Discussions', href: '#' },
-        { label: 'License', href: '#' }
+        { label: 'Issues', href: 'https://github.com/CoverageTracker/coverage-tracker/issues' },
+        { label: 'Discussions', href: 'https://github.com/CoverageTracker/coverage-tracker/discussions' },
+        { label: 'License', href: 'https://github.com/CoverageTracker/coverage-tracker/blob/main/LICENSE' }
       ]
     }
   ];
