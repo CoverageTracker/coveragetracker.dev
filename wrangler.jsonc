@@ -1,0 +1,8 @@
+{
+  // Pages project — no "main" entry, so wrangler treats this as Pages, not a Worker.
+  // pages_build_output_dir is the key field that signals this distinction.
+  "name": "coveragetracker-dev",
+  "pages_build_output_dir": ".svelte-kit/cloudflare",
+  "compatibility_date": "2024-11-01",
+  "compatibility_flags": ["nodejs_compat"]
+}

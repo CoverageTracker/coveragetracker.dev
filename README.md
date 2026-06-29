@@ -38,7 +38,7 @@ pnpm check      # svelte-kit sync + svelte-check (type checking)
 pnpm deploy     # build + wrangler pages deploy
 ```
 
-`wrangler.toml` sets `pages_build_output_dir` and `nodejs_compat`.
+`wrangler.jsonc` sets `pages_build_output_dir` (which tells wrangler this is a Pages project, not a Worker) and `nodejs_compat`.
 
 ## Structure
 
