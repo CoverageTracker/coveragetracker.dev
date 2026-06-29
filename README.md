@@ -1,7 +1,8 @@
-# Coverage Tracker — marketing site
+# Coverage Tracker — marketing site + docs
 
-The marketing landing for **coveragetracker.dev**, built with **SvelteKit (Svelte 5 runes)**,
-**Tailwind CSS v4**, and deployed to **Cloudflare Pages** via `@sveltejs/adapter-cloudflare`.
+The marketing landing and documentation site for **coveragetracker.dev**, built with
+**SvelteKit (Svelte 5 runes)**, **Tailwind CSS v4**, and deployed to **Cloudflare Pages**
+via `@sveltejs/adapter-cloudflare`.
 
 It mirrors the dashboard's design system: JetBrains Mono brand type, Inter body, terminal-dark
 surfaces, and the six editor colorschemes (Catppuccin, Gruvbox, Nord, Solarized, Dracula,
@@ -11,15 +12,16 @@ the nav and re-themes the entire page from a single token swap.
 ## Develop
 
 ```bash
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
 
 ## Build
 
 ```bash
-npm run build      # outputs to .svelte-kit/cloudflare
-npm run preview    # preview the production build locally
+pnpm build      # outputs to .svelte-kit/cloudflare
+pnpm preview    # preview the production build locally
+pnpm check      # svelte-kit sync + svelte-check (type checking)
 ```
 
 ## Deploy to Cloudflare Pages
@@ -27,13 +29,13 @@ npm run preview    # preview the production build locally
 **Option A — Git integration (recommended).** Connect the repo in the Cloudflare dashboard:
 
 - Framework preset: **SvelteKit**
-- Build command: `npm run build`
+- Build command: `pnpm build`
 - Build output directory: `.svelte-kit/cloudflare`
 
 **Option B — Wrangler CLI.**
 
 ```bash
-npm run deploy     # = vite build && wrangler pages deploy .svelte-kit/cloudflare
+pnpm deploy     # build + wrangler pages deploy
 ```
 
 `wrangler.toml` sets `pages_build_output_dir` and `nodejs_compat`.
@@ -47,18 +49,26 @@ src/
   lib/
     theme.svelte.ts            theme store (data-theme/data-mode, localStorage)
     components/
-      Nav.svelte               sticky header + theme switcher
-      Hero.svelte              wordmark, lede, coverage-ring panel, tool strip
+      Nav.svelte               sticky header, Docs link, theme switcher
+      Hero.svelte              wordmark, lede, coverage-ring panel, Deploy to Cloudflare
+                               button, animated typing tool strip
       Features.svelte          six feature cards
-      HowItWorks.svelte        three-step setup
+      HowItWorks.svelte        three-step setup flow
       ThemeShowcase.svelte     live theme grid + dashboard preview
-      Footer.svelte
+      Footer.svelte            links to /#features, /docs, GitHub
       ThemePicker.svelte       dashboard-style scheme dropdown + mode toggle
       BrandMark.svelte
+      docs/
+        DocsSidebar.svelte     sticky left nav with scroll-spy + mobile accordion
+        DocsContent.svelte     all doc sections (overview, installation, usage, reference)
+        CodeBlock.svelte       code card with filename, lang badge, copy button
+        Callout.svelte         note / warn callout
   routes/
     +layout.svelte             applies the active theme to <html>
     +layout.ts                 prerender = true
-    +page.svelte               composes the landing sections
+    +page.svelte               landing page (Hero, Features, HowItWorks, ThemeShowcase)
+    docs/
+      +page.svelte             /docs route (Nav, header, DocsSidebar, DocsContent, Footer)
 static/
   fonts/                       Inter + JetBrains Mono (woff2)
   logo-mark.svg
