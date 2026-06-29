@@ -7,9 +7,8 @@
     },
     {
       num: '02',
-      title: 'Push from CI',
-      body: 'Add one step to your pipeline. It records a sample on every commit.',
-      code: 'coverage-tracker upload ./lcov.info'
+      title: 'Add the reporting Action',
+      body: 'Drop the reporting Action into your workflow. It reads Go, Python, or JavaScript coverage artifacts, collects complexity and duplication, and posts everything to your Worker with a GitHub Actions OIDC token — no static secret required.'
     },
     {
       num: '03',
@@ -23,7 +22,7 @@
   <div class="wrap">
     <div class="sec-eyebrow mono">// from zero to trend</div>
     <h2 class="sec-title mono">Three steps to live coverage</h2>
-    <p class="sec-lede">No dashboards to configure, no databases to run. Deploy, install, and pipe your report.</p>
+    <p class="sec-lede">Deploy the Worker and D1 database to your Cloudflare account once — then adding any repo to coverage tracking takes three steps.</p>
 
     <div class="steps">
       {#each steps as s}

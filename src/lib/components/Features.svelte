@@ -24,8 +24,8 @@
       paths: ['M8 7l8 9']
     },
     {
-      title: 'One-line ingest',
-      body: 'Pipe an lcov or cobertura report from any CI in a single step. No agents, no proprietary format.',
+      title: 'One-step ingest',
+      body: 'Add the reporting Action to your workflow. It auto-detects Go, Python, and JavaScript coverage reports, collects complexity and duplication, then posts everything with a GitHub Actions OIDC token — no static secret.',
       paths: ['M2 12h6m8 0h6']
     },
     {

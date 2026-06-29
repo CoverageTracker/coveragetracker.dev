@@ -5,24 +5,24 @@
     {
       head: 'Product',
       links: [
-        { label: 'Features', href: '#features' },
-        { label: 'How it works', href: '#how' },
-        { label: 'Themes', href: '#themes' }
+        { label: 'Features', href: '/#features' },
+        { label: 'How it works', href: '/#how' },
+        { label: 'Themes', href: '/#themes' }
       ]
     },
     {
       head: 'Developers',
       links: [
-        { label: 'Documentation', href: '#' },
-        { label: 'Self-host guide', href: '#' },
-        { label: 'API reference', href: '#' },
+        { label: 'Documentation', href: '/docs' },
+        { label: 'Self-host guide', href: '/docs#prerequisites' },
+        { label: 'API reference', href: '/docs#api' },
         { label: 'Changelog', href: '#' }
       ]
     },
     {
       head: 'Project',
       links: [
-        { label: 'GitHub', href: 'https://github.com/coveragetracker/coverage-tracker' },
+        { label: 'GitHub', href: 'https://github.com/CoverageTracker/coverage-tracker' },
         { label: 'Issues', href: '#' },
         { label: 'Discussions', href: '#' },
         { label: 'License', href: '#' }
@@ -34,7 +34,7 @@
 <footer>
   <div class="wrap top">
     <div class="fbrand">
-      <a class="brand mono" href="#top"><BrandMark />Coverage Tracker</a>
+      <a class="brand mono" href="/"><BrandMark />Coverage Tracker</a>
       <p>Self-hosted code coverage and quality tracking for GitHub repositories. MIT licensed.</p>
     </div>
     {#each cols as c}
