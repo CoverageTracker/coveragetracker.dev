@@ -1,0 +1,13 @@
+---
+id: prerequisites
+kicker: installation
+title: Prerequisites
+---
+
+- A **Cloudflare account** (free tier is sufficient).
+- A **domain managed by Cloudflare** — DNS must be proxied through Cloudflare.
+- A **GitHub account** (personal or org) with admin access to the repos you want to track.
+- **Node.js 18+** and **npm** installed locally.
+- **Wrangler** authenticated: `npx wrangler login`.
+
+If your domain's DNS lives elsewhere, add the domain in the Cloudflare dashboard, pick the Free plan, and replace the registrar's nameservers with the two Cloudflare provides. You do **not** need to create a DNS record for the Worker subdomain — the deploy step handles that.

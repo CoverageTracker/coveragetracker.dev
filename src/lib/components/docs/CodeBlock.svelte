@@ -2,8 +2,9 @@
   let {
     file = '',
     lang = '',
-    code
-  }: { file?: string; lang?: string; code: string } = $props();
+    code,
+    highlighted = ''
+  }: { file?: string; lang?: string; code: string; highlighted?: string } = $props();
 
   let copied = $state(false);
   let timer: ReturnType<typeof setTimeout>;
@@ -33,7 +34,11 @@
       {/if}
     </button>
   </div>
-  <pre class="mono">{code}</pre>
+  {#if highlighted}
+    <div class="hl">{@html highlighted}</div>
+  {:else}
+    <pre class="mono">{code}</pre>
+  {/if}
 </div>
 
 <style>
@@ -86,5 +91,22 @@
     line-height: 1.7;
     color: var(--text);
     white-space: pre;
+  }
+  /* Shiki-generated <pre> lives inside .hl which is scoped */
+  .hl :global(pre.shiki) {
+    margin: 0;
+    padding: 15px 16px;
+    overflow-x: auto;
+    font-size: 13px;
+    line-height: 1.7;
+    white-space: pre;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    background: var(--card) !important;
+  }
+  .hl :global(pre.shiki code) {
+    font-size: inherit;
+    font-family: inherit;
+    background: none;
+    display: block;
   }
 </style>

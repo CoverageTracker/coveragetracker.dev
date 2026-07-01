@@ -1,0 +1,12 @@
+---
+id: overview
+kicker: getting started
+title: Overview
+---
+
+Coverage Tracker is a **self-hosted** dashboard that tracks code coverage, cyclomatic complexity, and code duplication across your GitHub repositories — with trend charts, per-PR diff checks, and README badges.
+
+It runs entirely on your own Cloudflare account: a single **Worker** serves both the dashboard SPA and the API, backed by a **D1** database. Your data stays in your own database — no SaaS, no subscriptions, no third-party access to your metrics.
+
+> [!NOTE] Self-hosted by design
+> One instance per deployer, not multi-tenant. A single Worker and one `wrangler.json` on one apex domain. Everything below assumes you are deploying your own instance.

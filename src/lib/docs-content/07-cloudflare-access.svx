@@ -1,0 +1,20 @@
+---
+id: cloudflare-access
+kicker: installation
+title: Cloudflare Access
+---
+
+In **Zero Trust**, choose a team name (becomes `myteam.cloudflareaccess.com`). Then create a **GitHub OAuth App** for dashboard login with callback URL `https://myteam.cloudflareaccess.com/cdn-cgi/access/callback`, and add GitHub as an identity provider in **Settings → Authentication** using that OAuth App's client id and secret.
+
+You will create **two** Access applications for the same hostname:
+
+<table class="deftable">
+  <thead><tr><th>App</th><th>Path</th><th>Policy</th></tr></thead>
+  <tbody>
+    <tr><td>Dashboard (Allow)</td><td><em>blank — whole host</em></td><td>Allow → your email. Copy the <strong>AUD tag</strong> → <code>CF_ACCESS_AUD</code></td></tr>
+    <tr><td>API Bypass</td><td><code>/api</code></td><td>Bypass → Everyone</td></tr>
+  </tbody>
+</table>
+
+> [!WARNING] Critical invariant
+> Never put an Access *Allow* policy on `/api/*`. Machine callers (CI OIDC, webhooks, health) must reach the Worker unauthenticated at the edge — API auth is enforced in code. The bypass only removes the edge OAuth redirect; no `/api/*` route is left unprotected.

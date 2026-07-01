@@ -1,0 +1,18 @@
+---
+id: ingest-payload
+kicker: reference
+title: Ingest payload
+---
+
+`line_coverage` is required; all other fields are optional. `repository`, `branch`, and `commit_sha` are derived from the OIDC token claims — they are not accepted in the body.
+
+```json file="POST /api/ci/coverage"
+{
+  "line_coverage": 82.4,
+  "branch_coverage": 79.1,
+  "cyclomatic": 4.2,
+  "cognitive": 2.1,
+  "duplication_pct": 1.8,
+  "maintainability": 95.0
+}
+```

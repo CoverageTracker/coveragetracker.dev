@@ -1,0 +1,39 @@
+---
+id: how-it-works
+kicker: architecture
+title: How it works
+---
+
+The flow is four moving parts: your CI pushes metrics, the Worker validates and stores them, D1 keeps the history, and the dashboard reads trends back.
+
+<ol class="steplist">
+  <li>
+    <h3 class="mono">Install the GitHub App</h3>
+    <p>On the repos you want to track. The Worker registers them automatically via an <code>installation</code> webhook.</p>
+  </li>
+  <li>
+    <h3 class="mono">Push from CI</h3>
+    <p>A reporting step runs after your test suite, collects coverage / complexity / duplication numbers, and posts them using a GitHub Actions OIDC token — no static secret.</p>
+  </li>
+  <li>
+    <h3 class="mono">View trends</h3>
+    <p>The dashboard, served as static assets by the same Worker, is protected by Cloudflare Access so only you can see it.</p>
+  </li>
+  <li>
+    <h3 class="mono">Embed a badge</h3>
+    <p>Optionally opt a repo into the public, shields.io-compatible badge endpoint and drop the Markdown into your README.</p>
+  </li>
+</ol>
+
+### Request routing
+
+Only `/api/*` hits the Worker first; everything else is served asset-first as a single-page app. Each API route enforces its own auth in code.
+
+```text file="routing"
+POST /api/ci/coverage   ← OIDC-verified, project-scoped
+GET  /api/projects/*    ← Cloudflare Access JWT
+GET  /api/badge/*       ← public (per-project opt-in)
+POST /api/webhooks/*    ← GitHub App HMAC
+GET  /api/health        ← public
+*                       ← dashboard SPA (static assets)
+```

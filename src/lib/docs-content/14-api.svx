@@ -1,0 +1,20 @@
+---
+id: api
+kicker: reference
+title: API reference
+---
+
+<table class="deftable">
+  <thead><tr><th>Method & path</th><th>Auth</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><span class="method mono">POST</span> <code>/api/ci/coverage</code></td><td>OIDC</td><td>Push typed coverage metrics from CI</td></tr>
+    <tr><td><span class="method mono">GET</span> <code>/api/projects</code></td><td>Access</td><td>List all registered owners and repos</td></tr>
+    <tr><td><span class="method mono">GET</span> <code>/api/projects/:owner/:repo/metrics</code></td><td>Access</td><td>Trend data for one repo</td></tr>
+    <tr><td><span class="method mono">GET</span> <code>/api/baseline/:owner/:repo</code></td><td>OIDC</td><td>Latest value on default branch</td></tr>
+    <tr><td><span class="method mono">GET</span> <code>/api/badge/:owner/:repo/:metric.json</code></td><td>Public</td><td>shields.io endpoint (opt-in repos)</td></tr>
+    <tr><td><span class="method mono">POST</span> <code>/api/webhooks/github</code></td><td>HMAC</td><td>GitHub App installation events</td></tr>
+    <tr><td><span class="method mono">POST</span> <code>/api/admin/resync</code></td><td>Access</td><td>Reconcile projects against GitHub</td></tr>
+    <tr><td><span class="method mono">PATCH</span> <code>/api/admin/projects/:id/badge</code></td><td>Access</td><td>Toggle badge visibility</td></tr>
+    <tr><td><span class="method mono">GET</span> <code>/api/health</code></td><td>Public</td><td>Liveness check</td></tr>
+  </tbody>
+</table>

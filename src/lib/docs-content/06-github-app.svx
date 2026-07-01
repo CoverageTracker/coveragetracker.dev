@@ -1,0 +1,36 @@
+---
+id: github-app
+kicker: installation
+title: GitHub App
+---
+
+> [!WARNING] Two separate integrations
+> The **GitHub App** (this step) handles webhook events and API access. The **GitHub OAuth App** (next section) handles dashboard login via Cloudflare Access. Create them separately — do not conflate them.
+
+From the account or org that will host the app, go to **Settings → Developer settings → GitHub Apps → New GitHub App** and fill in:
+
+<table class="deftable">
+  <thead><tr><th>Field</th><th>Value</th></tr></thead>
+  <tbody>
+    <tr><td>GitHub App name</td><td>Globally unique, e.g. <code>your-coverage-tracker</code></td></tr>
+    <tr><td>Homepage URL</td><td><code>https://coverage-tracker.yourdomain.com</code></td></tr>
+    <tr><td>Webhook → Active</td><td>checked</td></tr>
+    <tr><td>Webhook URL</td><td><code>…/webhooks/github</code></td></tr>
+    <tr><td>Webhook secret</td><td>Generate 32 random bytes — save this value</td></tr>
+  </tbody>
+</table>
+
+Leave **Callback URL**, **OAuth during installation**, and **Setup URL** blank. Under repository permissions set **Metadata: read-only** and **Checks: read & write** — nothing else. Subscribe to both **Installation target** and **Installation repositories** events. For a private instance, choose **Only on this account**.
+
+### Convert the private key
+
+GitHub downloads a PKCS#1 `.pem`; the Worker requires PKCS#8. Convert it with Node — no OpenSSL needed:
+
+```bash file="convert key"
+node -e "const c=require('crypto'), fs=require('fs');
+const key=c.createPrivateKey(fs.readFileSync(process.argv[1],'utf8'));
+process.stdout.write(key.export({type:'pkcs8',format:'pem'}));" \
+  your-app.private-key.pem | npx wrangler secret put GITHUB_APP_PRIVATE_KEY
+```
+
+From the app's settings page, note the **App ID** and **Client ID** — you set these as secrets next.

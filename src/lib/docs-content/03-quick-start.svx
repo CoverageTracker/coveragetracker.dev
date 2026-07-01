@@ -1,0 +1,22 @@
+---
+id: quick-start
+kicker: the short version
+title: Quick start
+---
+
+If you already run on Cloudflare, the whole setup is six moves. Each links to its full section below.
+
+1. Add your domain to Cloudflare (DNS proxied through Cloudflare).
+2. Create the D1 database and apply the migration.
+3. Create a **GitHub App** (webhooks + API access).
+4. Create a **GitHub OAuth App** (Cloudflare Access login).
+5. Configure Cloudflare Zero Trust, set secrets, and deploy the Worker.
+6. Install the GitHub App on your repos.
+
+Or skip the manual route entirely — the **Deploy to Cloudflare** button provisions the Worker and D1 automatically. You still complete the GitHub App, Zero Trust, and secrets steps afterward.
+
+```bash file="clone & install"
+git clone https://github.com/your-org/coverage-tracker
+cd coverage-tracker
+npm install
+```

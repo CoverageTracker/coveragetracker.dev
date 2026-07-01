@@ -1,0 +1,19 @@
+---
+id: verify
+kicker: installation
+title: Install & verify
+---
+
+From the GitHub App's settings page → **Install App** → choose the account or org → select repos. This fires an `installation: created` webhook that populates the `owners` and `projects` tables.
+
+Confirm the webhook landed:
+
+```bash file="verify"
+npx wrangler d1 execute DB --remote \
+  --command "SELECT * FROM owners"
+
+npx wrangler d1 execute DB --remote \
+  --command "SELECT full_slug, default_branch, badge_enabled FROM projects"
+```
+
+One row per account in `owners` and one per repo in `projects` means the install is complete. `badge_enabled` is `0` by default — opt in per repo below. If a table is empty, check `npx wrangler tail`; if owners has rows but projects is empty, trigger a manual resync via `POST /api/admin/resync`.
