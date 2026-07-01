@@ -1,0 +1,13 @@
+---
+id: ingest
+kicker: usage
+title: Ingest from CI
+---
+
+Add a workflow step that runs after your test suite and posts coverage to `/api/ci/coverage` using a GitHub Actions OIDC token. There is **no static ingest secret**: the Worker verifies the token signature and checks the `repository` claim against your registered projects, so only your repos can push data. Re-running CI for the same commit is a safe no-op.
+
+```bash file="upload step"
+coverage-tracker upload ./lcov.info
+```
+
+The reporting Action accepts lcov or cobertura reports from any CI — Jest, Vitest, pytest-cov, go test, JaCoCo, SimpleCov. Trend history is append-only; PR jobs read baselines but never write.

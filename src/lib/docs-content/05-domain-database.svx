@@ -1,0 +1,37 @@
+---
+id: domain-database
+kicker: installation
+title: Domain & database
+---
+
+Create your D1 database, then wire its id into `wrangler.jsonc` and apply the schema migration.
+
+```bash file="create D1"
+npx wrangler d1 create coverage
+```
+
+Copy the `database_id` from the output into the `d1_databases` entry of `wrangler.jsonc`:
+
+```jsonc file="wrangler.jsonc"
+{
+  // ...
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "coverage",
+      "database_id": "paste-your-id-here",   // ← add this line
+      "migrations_dir": "migrations"
+    }
+  ],
+  // ...
+}
+```
+
+Then apply the migration to your remote database:
+
+```bash file="migrate"
+npm run db:migrate:remote
+```
+
+> [!NOTE] Note
+> The committed `wrangler.jsonc` intentionally omits `database_id` so the Deploy to Cloudflare button can provision D1 automatically. For manual installs, add the field as shown.

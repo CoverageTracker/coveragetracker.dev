@@ -112,6 +112,23 @@
   --status-pass:#9ece6a; --status-warn:#e0af68; --status-alert:#ff9e64; --status-fail:#f7768e;
 }
 
+/* ---------- Shiki syntax highlighting — single mapping, all themes ----------
+   The css-variables Shiki theme emits var(--shiki-*) references on every token.
+   Mapping them to semantic tokens here means all 12 theme variants work for free. */
+:root, [data-theme] {
+  --shiki-foreground:              var(--text);
+  --shiki-background:              var(--card);
+  --shiki-token-comment:           var(--muted);
+  --shiki-token-string:            var(--status-pass);
+  --shiki-token-keyword:           var(--chart-1);
+  --shiki-token-function:          var(--primary);
+  --shiki-token-constant:          var(--status-alert);
+  --shiki-token-parameter:         var(--text);
+  --shiki-token-string-expression: var(--text);
+  --shiki-token-punctuation:       var(--muted);
+  --shiki-token-link:              var(--primary);
+}
+
 /* ---------- Expose tokens to Tailwind utilities ----------
    Enables bg-bg, text-text, text-muted, border-border, bg-card,
    bg-primary, text-primary, font-mono, font-body, etc. */
@@ -162,3 +179,75 @@
 /* ---------- Small shared helpers ---------- */
 .mono { font-family: var(--font-mono); }
 .wrap { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+
+/* ---------- Docs content — global so styles reach mdsvex child components ---------- */
+.content section { scroll-margin-top: 88px; padding-bottom: 8px; }
+.content section + section { margin-top: 48px; padding-top: 44px; border-top: 1px solid var(--border); }
+
+.kicker {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 12px;
+}
+.content h2 { font-size: 27px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 16px; }
+.content h3 { font-size: 16px; font-weight: 600; margin: 30px 0 10px; }
+.content p { font-size: 15px; line-height: 1.66; color: var(--muted); margin: 0 0 15px; }
+.content strong { color: var(--text); font-weight: 600; }
+
+.content ul, .content ol { margin: 0 0 15px; padding-left: 22px; }
+.content li { font-size: 15px; line-height: 1.66; color: var(--muted); margin-bottom: 7px; }
+.content li::marker { color: var(--muted); }
+
+/* inline code — reaches markup inside mdsvex-rendered content */
+.content code {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  background: var(--elevated);
+  color: var(--text);
+  padding: 2px 6px;
+  border-radius: 5px;
+}
+
+/* step list */
+.steplist { counter-reset: s; list-style: none; padding: 0; margin: 0 0 6px; }
+.steplist > li { position: relative; padding: 0 0 22px 42px; margin: 0; }
+.steplist > li:not(:last-child)::after {
+  content: ''; position: absolute; left: 13px; top: 30px; bottom: 2px; width: 1px; background: var(--border);
+}
+.steplist > li::before {
+  counter-increment: s; content: counter(s);
+  position: absolute; left: 0; top: 0; width: 27px; height: 27px; border-radius: 50%;
+  background: var(--card); border: 1px solid var(--border); color: var(--primary);
+  font-family: var(--font-mono); font-size: 12px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.steplist > li h3 { margin: 2px 0 6px; font-size: 15px; }
+.steplist > li p { margin: 0; }
+
+/* definition / api table */
+.deftable {
+  width: 100%; border-collapse: collapse;
+  border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+  margin: 0 0 18px; font-size: 14px;
+}
+.deftable th {
+  text-align: left; font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--muted); font-weight: 600; background: var(--card);
+  padding: 11px 14px; border-bottom: 1px solid var(--border);
+}
+.deftable td { padding: 11px 14px; border-bottom: 1px solid var(--border); color: var(--muted); line-height: 1.5; vertical-align: top; }
+.deftable tr:last-child td { border-bottom: 0; }
+.deftable td:first-child { color: var(--text); }
+.deftable code { white-space: nowrap; }
+
+.method {
+  font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 5px;
+  background: var(--accent-fill); color: var(--primary);
+}
+
+.realbadge { display: inline-flex; height: 22px; border-radius: 4px; overflow: hidden; font-size: 12px; }
+.realbadge .l { display: flex; align-items: center; padding: 0 9px; background: #3c3c43; color: #fff; }
+.realbadge .r { display: flex; align-items: center; padding: 0 9px; background: var(--status-pass); color: #13231a; font-weight: 700; }

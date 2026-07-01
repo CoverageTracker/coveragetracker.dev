@@ -1,0 +1,22 @@
+---
+id: deploy
+kicker: installation
+title: Deploy the Worker
+---
+
+Make sure dashboard dependencies are installed, then deploy. The command applies pending D1 migrations and compiles the SvelteKit dashboard before uploading.
+
+```bash file="deploy"
+npm --prefix dashboard install
+npm run deploy
+
+# Deployed coverage-tracker triggers
+#   coverage-tracker.yourdomain.com (custom domain)
+```
+
+If **Bot Fight Mode** or **Browser Integrity Check** is enabled on your zone, add WAF skip rules for the machine-caller routes (this is separate from the Access bypass — Bot Fight Mode fires before Access):
+
+```bash file="WAF skip rules"
+CLOUDFLARE_API_TOKEN=<token> ZONE_DOMAIN=yourdomain.com \
+  node scripts/setup-waf-rules.mjs
+```

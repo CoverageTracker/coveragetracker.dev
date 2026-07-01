@@ -1,0 +1,28 @@
+---
+id: badges
+kicker: usage
+title: Status badges
+---
+
+Badge numbers are opt-in per repo. Find the project id, enable it, then paste the snippet into your README. Available metrics: `coverage`, `complexity`, `duplication`.
+
+```bash file="enable badge"
+# find the project id
+npx wrangler d1 execute DB --remote \
+  --command "SELECT id, full_slug FROM projects"
+
+# enable the public badge endpoint
+curl -X PATCH …/api/admin/projects/1/badge \
+  -H "Cf-Access-Jwt-Assertion: <token>" \
+  -d '{"enabled": true}'
+```
+
+Then drop the shields.io endpoint badge into your README:
+
+```md file="README.md"
+![coverage](https://img.shields.io/endpoint?url=
+  https://coverage-tracker.yourdomain.com
+  /api/badge/owner/repo/coverage.json)
+```
+
+<span class="realbadge mono"><span class="l">coverage</span><span class="r">94%</span></span>
