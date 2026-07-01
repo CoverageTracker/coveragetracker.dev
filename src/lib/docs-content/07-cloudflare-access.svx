@@ -2,6 +2,7 @@
 id: cloudflare-access
 kicker: installation
 title: Cloudflare Access
+group: installation
 ---
 
 In **Zero Trust**, choose a team name (becomes `myteam.cloudflareaccess.com`). Then create a **GitHub OAuth App** for dashboard login with callback URL `https://myteam.cloudflareaccess.com/cdn-cgi/access/callback`, and add GitHub as an identity provider in **Settings → Authentication** using that OAuth App's client id and secret.

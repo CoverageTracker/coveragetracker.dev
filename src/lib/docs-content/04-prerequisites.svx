@@ -2,6 +2,7 @@
 id: prerequisites
 kicker: installation
 title: Prerequisites
+group: installation
 ---
 
 - A **Cloudflare account** (free tier is sufficient).

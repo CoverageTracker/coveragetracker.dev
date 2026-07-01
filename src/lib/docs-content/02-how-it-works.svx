@@ -2,6 +2,7 @@
 id: how-it-works
 kicker: architecture
 title: How it works
+group: getting started
 ---
 
 The flow is four moving parts: your CI pushes metrics, the Worker validates and stores them, D1 keeps the history, and the dashboard reads trends back.

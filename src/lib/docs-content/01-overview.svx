@@ -2,6 +2,7 @@
 id: overview
 kicker: getting started
 title: Overview
+group: getting started
 ---
 
 Coverage Tracker is a **self-hosted** dashboard that tracks code coverage, cyclomatic complexity, and code duplication across your GitHub repositories — with trend charts, per-PR diff checks, and README badges.

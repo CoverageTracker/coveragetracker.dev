@@ -2,6 +2,7 @@
 id: deploy
 kicker: installation
 title: Deploy the Worker
+group: installation
 ---
 
 Make sure dashboard dependencies are installed, then deploy. The command applies pending D1 migrations and compiles the SvelteKit dashboard before uploading.

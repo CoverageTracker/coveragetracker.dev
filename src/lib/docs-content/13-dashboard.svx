@@ -2,6 +2,7 @@
 id: dashboard
 kicker: usage
 title: Dashboard
+group: usage
 ---
 
 The SvelteKit dashboard is compiled by `wrangler deploy` automatically and served as static assets by the same Worker — there is no separate Pages project. After first deploy, visit `https://coverage-tracker.yourdomain.com`; Cloudflare Access prompts you to log in with the identity provider you configured. Once authenticated, the dashboard shows all registered repos and their per-metric, per-branch trend charts.

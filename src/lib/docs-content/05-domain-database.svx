@@ -2,6 +2,7 @@
 id: domain-database
 kicker: installation
 title: Domain & database
+group: installation
 ---
 
 Create your D1 database, then wire its id into `wrangler.jsonc` and apply the schema migration.
