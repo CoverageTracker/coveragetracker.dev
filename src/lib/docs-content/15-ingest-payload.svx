@@ -2,6 +2,7 @@
 id: ingest-payload
 kicker: reference
 title: Ingest payload
+group: reference
 ---
 
 `line_coverage` is required; all other fields are optional. `repository`, `branch`, and `commit_sha` are derived from the OIDC token claims — they are not accepted in the body.

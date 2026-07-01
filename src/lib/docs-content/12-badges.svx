@@ -2,6 +2,7 @@
 id: badges
 kicker: usage
 title: Status badges
+group: usage
 ---
 
 Badge numbers are opt-in per repo. Find the project id, enable it, then paste the snippet into your README. Available metrics: `coverage`, `complexity`, `duplication`.

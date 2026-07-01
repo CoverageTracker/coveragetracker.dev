@@ -2,6 +2,7 @@
 id: github-app
 kicker: installation
 title: GitHub App
+group: installation
 ---
 
 > [!WARNING] Two separate integrations

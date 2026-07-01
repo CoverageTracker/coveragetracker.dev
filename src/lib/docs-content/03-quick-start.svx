@@ -2,6 +2,7 @@
 id: quick-start
 kicker: the short version
 title: Quick start
+group: getting started
 ---
 
 If you already run on Cloudflare, the whole setup is six moves. Each links to its full section below.

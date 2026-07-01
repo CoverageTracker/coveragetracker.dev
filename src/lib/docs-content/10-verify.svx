@@ -2,6 +2,7 @@
 id: verify
 kicker: installation
 title: Install & verify
+group: installation
 ---
 
 From the GitHub App's settings page → **Install App** → choose the account or org → select repos. This fires an `installation: created` webhook that populates the `owners` and `projects` tables.

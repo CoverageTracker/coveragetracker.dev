@@ -1,17 +1,11 @@
 <script lang="ts">
-  import type { Component } from 'svelte';
-
-  const mods = import.meta.glob('/src/lib/docs-content/*.svx', { eager: true });
-  const sections = Object.values(mods) as Array<{
-    default: Component;
-    metadata: { id: string };
-  }>;
+  import { sections } from '$lib/docs-content/index';
 </script>
 
 <main class="content">
-  {#each sections as mod}
-    <section id={mod.metadata.id}>
-      <mod.default />
+  {#each sections as s}
+    <section id={s.id}>
+      <s.component />
     </section>
   {/each}
 

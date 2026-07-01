@@ -2,6 +2,7 @@
 id: api
 kicker: reference
 title: API reference
+group: reference
 ---
 
 <table class="deftable">

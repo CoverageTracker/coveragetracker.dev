@@ -1,46 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-
-  type Item = { id: string; label: string };
-  type Group = { head: string; items: Item[] };
-
-  const groups: Group[] = [
-    {
-      head: 'Getting started',
-      items: [
-        { id: 'overview', label: 'Overview' },
-        { id: 'how-it-works', label: 'How it works' },
-        { id: 'quick-start', label: 'Quick start' }
-      ]
-    },
-    {
-      head: 'Installation',
-      items: [
-        { id: 'prerequisites', label: 'Prerequisites' },
-        { id: 'domain-database', label: 'Domain & database' },
-        { id: 'github-app', label: 'GitHub App' },
-        { id: 'cloudflare-access', label: 'Cloudflare Access' },
-        { id: 'secrets', label: 'Secrets' },
-        { id: 'deploy', label: 'Deploy the Worker' },
-        { id: 'verify', label: 'Install & verify' }
-      ]
-    },
-    {
-      head: 'Usage',
-      items: [
-        { id: 'ingest', label: 'Ingest from CI' },
-        { id: 'badges', label: 'Status badges' },
-        { id: 'dashboard', label: 'Dashboard' }
-      ]
-    },
-    {
-      head: 'Reference',
-      items: [
-        { id: 'api', label: 'API reference' },
-        { id: 'ingest-payload', label: 'Ingest payload' }
-      ]
-    }
-  ];
+  import { sidebarGroups as groups } from '$lib/docs-content/index';
 
   let active = $state('overview');
   let open = $state(false);
