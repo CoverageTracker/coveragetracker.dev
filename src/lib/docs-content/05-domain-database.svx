@@ -13,14 +13,18 @@ npx wrangler d1 create coverage
 Copy the `database_id` from the output into the `d1_databases` entry of `wrangler.jsonc`:
 
 ```jsonc file="wrangler.jsonc"
-"d1_databases": [
-  {
-    "binding": "DB",
-    "database_name": "coverage",
-    "database_id": "paste-your-id-here",   // ← add this line
-    "migrations_dir": "migrations"
-  }
-]
+{
+  // ...
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "coverage",
+      "database_id": "paste-your-id-here",   // ← add this line
+      "migrations_dir": "migrations"
+    }
+  ],
+  // ...
+}
 ```
 
 Then apply the migration to your remote database:
