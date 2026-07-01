@@ -15,7 +15,7 @@ import { remarkCodeBlocks } from './src/lib/docs-content/remark-code-blocks.js';
  */
 function injectDocComponents() {
   return {
-    markup({ content, filename }: { content: string; filename?: string }) {
+    markup({ content, filename }) {
       if (!filename?.endsWith('.svx')) return;
 
       const needsCallout = /<Callout[\s/>]/.test(content);
