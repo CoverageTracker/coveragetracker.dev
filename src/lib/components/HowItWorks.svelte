@@ -29,10 +29,7 @@
         <div class="step">
           <span class="num mono">{s.num}</span>
           <h3 class="mono">{s.title}</h3>
-          <p>
-            {s.body}
-            {#if s.code}<br /><code class="mono">{s.code}</code>{/if}
-          </p>
+          <p>{s.body}</p>
         </div>
       {/each}
     </div>
@@ -50,7 +47,6 @@
   .num { font-size: 13px; font-weight: 700; color: var(--primary); border-top: 2px solid var(--primary); padding-top: 14px; display: inline-block; }
   .step h3 { font-size: 17px; font-weight: 600; margin: 14px 0 8px; }
   .step p { font-size: 13.5px; line-height: 1.6; color: var(--muted); margin: 0; }
-  .step code { display: inline-block; margin-top: 8px; font-size: 12px; background: var(--elevated); padding: 4px 8px; border-radius: 5px; color: var(--text); }
 
   @media (max-width: 760px) { .steps { grid-template-columns: 1fr; gap: 28px; } }
 </style>
