@@ -1,43 +1,38 @@
-// @ts-check
-import { createHighlighter, createCssVariablesTheme } from 'shiki';
+import { createHighlighter, createCssVariablesTheme, type Highlighter } from 'shiki';
+import type { Root } from 'mdast';
 import { visit } from 'unist-util-visit';
+
+declare global {
+  // eslint-disable-next-line no-var
+  var __shikiHighlighterPromise: Promise<Highlighter> | undefined;
+}
 
 const cssVarsTheme = createCssVariablesTheme({ name: 'css-variables', variablePrefix: '--shiki-', fontStyle: true });
 
-/** @type {import('shiki').Highlighter | undefined} */
-let hl;
-
-async function getHighlighter() {
-  if (!hl) {
-    hl = await createHighlighter({
-      themes: [cssVarsTheme],
-      langs: [
-        'bash', 'sh', 'shell',
-        'json', 'jsonc', 'yaml', 'toml',
-        'typescript', 'javascript', 'jsx', 'tsx',
-        'svelte',
-        'markdown',
-        'rust', 'go',
-        'sql',
-        'python',
-        'html', 'css',
-        'diff',
-        'text'
-      ]
-    });
-  }
-  return hl;
+if (!globalThis.__shikiHighlighterPromise) {
+  globalThis.__shikiHighlighterPromise = createHighlighter({
+    themes: [cssVarsTheme],
+    langs: [
+      'bash', 'sh', 'shell',
+      'json', 'jsonc', 'yaml', 'toml',
+      'typescript', 'javascript', 'jsx', 'tsx',
+      'svelte',
+      'markdown',
+      'rust', 'go',
+      'sql',
+      'python',
+      'html', 'css',
+      'diff',
+      'text'
+    ]
+  });
 }
 
-/**
- * Converts fenced code blocks to <CodeBlock> component tags with Shiki-highlighted
- * HTML pre-rendered at build time using the css-variables theme.
- *
- * @returns {(tree: import('mdast').Root) => Promise<void>}
- */
-export function remarkCodeBlocks() {
+const highlighterPromise: Promise<Highlighter> = globalThis.__shikiHighlighterPromise;
+
+export function remarkCodeBlocks(): (tree: Root) => Promise<void> {
   return async (tree) => {
-    const highlighter = await getHighlighter();
+    const highlighter = await highlighterPromise;
     const supported = new Set(highlighter.getLoadedLanguages());
 
     visit(tree, 'code', (node, index, parent) => {
@@ -69,7 +64,7 @@ export function remarkCodeBlocks() {
         .filter(Boolean)
         .join(' ');
 
-      /** @type {any} */ (parent.children)[index] = {
+      (parent.children as any[])[index] = {
         type: 'html',
         value: `<CodeBlock ${props} />`
       };

@@ -3,7 +3,7 @@ import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import { mdsvex } from 'mdsvex';
 import { resolve } from 'path';
 import { remarkCallouts } from './src/lib/docs-content/remark-callouts.js';
-import { remarkCodeBlocks } from './src/lib/docs-content/remark-code-blocks.js';
+import { remarkCodeBlocks } from './src/lib/docs-content/remark-code-blocks.ts';
 
 /**
  * Post-mdsvex preprocessor: injects Callout/CodeBlock imports into .svx files.
