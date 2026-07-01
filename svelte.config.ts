@@ -2,6 +2,8 @@ import adapter from '@sveltejs/adapter-cloudflare';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import { mdsvex } from 'mdsvex';
 import { resolve } from 'path';
+import type { Config } from '@sveltejs/kit';
+import type { PreprocessorGroup } from 'svelte/compiler';
 import { remarkCallouts } from './src/lib/docs-content/remark-callouts.js';
 import { remarkCodeBlocks } from './src/lib/docs-content/remark-code-blocks.ts';
 
@@ -13,7 +15,7 @@ import { remarkCodeBlocks } from './src/lib/docs-content/remark-code-blocks.ts';
  * This preprocessor runs after mdsvex and injects the required imports so
  * Svelte can resolve the component names at compile time.
  */
-function injectDocComponents() {
+function injectDocComponents(): PreprocessorGroup {
   return {
     markup({ content, filename }) {
       if (!filename?.endsWith('.svx')) return;
@@ -37,8 +39,7 @@ function injectDocComponents() {
   };
 }
 
-/** @type {import('@sveltejs/kit').Config} */
-const config = {
+const config: Config = {
   extensions: ['.svelte', '.svx'],
   preprocess: [
     vitePreprocess(),
