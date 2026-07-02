@@ -98,23 +98,33 @@ Run it locally against a sibling checkout:
 pnpm export-docs ../coverage-tracker
 ```
 
-### Provisioning the sync token
+### Provisioning the sync credentials
 
-The workflow authenticates with a fine-grained PAT stored as the repo secret
-`COVERAGE_TRACKER_SYNC_TOKEN`. The product GitHub App's permissions are deliberately
-**not** widened for this docs plumbing. To (re)provision the token — after expiry, a new
-fork, or a maintainer change:
+The target repo requires **signed commits** on PRs, so the workflow authenticates with a
+dedicated **GitHub App** installation token rather than a PAT. This is deliberate:
+`create-pull-request`'s `sign-commits` builds commits through the GitHub API, and the API
+only signs them (as the app bot, shown *Verified*) when the token is a bot token — a PAT
+leaves the commits **unsigned** and branch protection rejects the PR. The product GitHub
+App's permissions are deliberately **not** widened for this docs plumbing, so this uses a
+separate minimal App.
 
-1. GitHub → **Settings → Developer settings → Personal access tokens → Fine-grained
-   tokens → Generate new token**
-2. Resource owner: the **CoverageTracker** org; Repository access: **Only select
-   repositories** → `coverage-tracker`
-3. Repository permissions: **Contents → Read and write**, **Pull requests → Read and
-   write**; everything else: No access
-4. Set an expiration and note it somewhere you'll see it — when the token lapses, the
-   workflow fails with an auth error on the checkout or PR step
-5. Save the token in **this repo** as the Actions secret `COVERAGE_TRACKER_SYNC_TOKEN`
-   (Settings → Secrets and variables → Actions)
+To (re)provision — a new fork, a rotated key, or a maintainer change:
+
+1. **CoverageTracker** org → **Settings → Developer settings → GitHub Apps → New GitHub
+   App**. Name it e.g. `coveragetracker-docs-sync`, give any valid homepage URL, and
+   uncheck **Webhook → Active**.
+2. Repository permissions: **Contents → Read and write**, **Pull requests → Read and
+   write**; everything else: No access. Create the App.
+3. App settings → **Private keys → Generate a private key** and download the `.pem`.
+4. **Install** the App on the org, scoped to **Only select repositories → `coverage-tracker`**
+   (installation is required — creating the App alone does nothing).
+5. In **this repo** → Settings → Secrets and variables → Actions, add two secrets:
+   - `DOCS_SYNC_APP_ID` — the App's numeric **App ID**
+   - `DOCS_SYNC_APP_PRIVATE_KEY` — the full contents of the downloaded `.pem`
+
+The App has no expiry to track; installation tokens are minted per run by
+`actions/create-github-app-token`. If commits ever land **Unverified**, check that the App
+is still installed on `coverage-tracker`.
 
 ## Theming
 
