@@ -22,6 +22,10 @@ permissions:
 jobs:
   export:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+      pull-requests: write
     steps:
       - name: Checkout coveragetracker.dev
         uses: actions/checkout@v4
@@ -40,6 +44,9 @@ jobs:
 
       - name: Export docs
         run: node --experimental-strip-types scripts/export-docs.ts target-repo
+
+      - name: Setup Git Sign
+        uses: chainguard-dev/actions/setup-gitsign@f0be69916b439d0fcced2451b23d0f27cd46d545 # v1.6.26
 
       # Fixed branch name so repeated runs update the same PR; skips cleanly
       # (no commit, no PR) when the export produced no diff.
