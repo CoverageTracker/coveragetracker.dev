@@ -1,0 +1,57 @@
+# Docs export pipeline: renders the configured .svx files into plain markdown
+# and opens (or updates) a PR against CoverageTracker/coverage-tracker.
+#
+# This repo is the origin of truth for shared docs content — the generated
+# files downstream (docs/generating-coverage-reports.md, docs/INSTALLATION.md)
+# must never be edited directly. See README.md § Docs export pipeline for the
+# COVERAGE_TRACKER_SYNC_TOKEN setup.
+name: Export docs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/lib/docs-content/*.svx'
+      - 'scripts/export-docs.ts'
+      - '.github/workflows/export-docs.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout coveragetracker.dev
+        uses: actions/checkout@v4
+
+      - name: Checkout coverage-tracker
+        uses: actions/checkout@v4
+        with:
+          repository: CoverageTracker/coverage-tracker
+          token: ${{ secrets.COVERAGE_TRACKER_SYNC_TOKEN }}
+          path: target-repo
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Export docs
+        run: node --experimental-strip-types scripts/export-docs.ts target-repo
+
+      # Fixed branch name so repeated runs update the same PR; skips cleanly
+      # (no commit, no PR) when the export produced no diff.
+      - name: Open or update sync PR
+        uses: peter-evans/create-pull-request@v7
+        with:
+          path: target-repo
+          token: ${{ secrets.COVERAGE_TRACKER_SYNC_TOKEN }}
+          branch: docs-sync
+          commit-message: 'docs: sync generated docs from coveragetracker.dev'
+          title: 'docs: sync generated docs from coveragetracker.dev'
+          body: |
+            Automated docs sync from [coveragetracker.dev](https://github.com/CoverageTracker/coveragetracker.dev) (`${{ github.sha }}`).
+
+            The files in this PR are generated from `src/lib/docs-content/*.svx` — do not edit them here; edit the `.svx` sources instead.

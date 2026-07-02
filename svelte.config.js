@@ -4,6 +4,7 @@ import { mdsvex } from 'mdsvex';
 import { resolve } from 'path';
 import { remarkCallouts } from './src/lib/docs-content/remark-callouts.js';
 import { remarkCodeBlocks } from './src/lib/docs-content/remark-code-blocks.js';
+import { remarkTables } from './src/lib/docs-content/remark-tables.js';
 
 /**
  * Post-mdsvex preprocessor: injects Callout/CodeBlock imports into .svx files.
@@ -45,7 +46,7 @@ const config = {
     mdsvex({
       extensions: ['.svx'],
       layout: resolve('./src/lib/docs-content/mdsvex-layout.svelte'),
-      remarkPlugins: [remarkCallouts, remarkCodeBlocks]
+      remarkPlugins: [remarkCallouts, remarkCodeBlocks, remarkTables]
     }),
     injectDocComponents()
   ],

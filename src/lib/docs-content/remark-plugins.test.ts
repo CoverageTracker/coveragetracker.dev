@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { compile } from 'mdsvex';
 import { remarkCallouts } from './remark-callouts.js';
 import { remarkCodeBlocks } from './remark-code-blocks.js';
+import { remarkTables } from './remark-tables.js';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -132,5 +133,24 @@ describe('remarkCodeBlocks', () => {
   it('handles multi-line code with newlines', async () => {
     const code = await compiled('```bash\nline1\nline2\n```', [remarkCodeBlocks]);
     expect(code).toMatch(/code=\{"line1\\nline2"\}/);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// remarkTables
+// ---------------------------------------------------------------------------
+
+describe('remarkTables', () => {
+  const table = '| Language | Tool |\n|---|---|\n| Go | `go tool cover` |';
+
+  it('renders a GFM pipe table as an HTML table', async () => {
+    const code = await compiled(table, [remarkTables]);
+    expect(code).toMatch(/<table/);
+    expect(code).toMatch(/<td>Go<\/td>/);
+  });
+
+  it('tags pipe tables with the deftable class', async () => {
+    const code = await compiled(table, [remarkTables]);
+    expect(code).toMatch(/<table class="deftable">/);
   });
 });

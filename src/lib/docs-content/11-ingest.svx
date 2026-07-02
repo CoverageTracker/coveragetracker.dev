@@ -11,4 +11,4 @@ Add a workflow step that runs after your test suite and posts coverage to `/api/
 coverage-tracker upload ./lcov.info
 ```
 
-The reporting Action accepts lcov or cobertura reports from any CI — Jest, Vitest, pytest-cov, go test, JaCoCo, SimpleCov. Trend history is append-only; PR jobs read baselines but never write.
+The reporting Action accepts LCOV, Cobertura XML, JaCoCo XML, or Go's native coverage profile from any CI — Jest, Vitest, pytest-cov, go test, JaCoCo, SimpleCov. See [Generating coverage reports](https://coveragetracker.dev/docs#generating-coverage-reports) for the per-language commands. Trend history is append-only; PR jobs read baselines but never write.

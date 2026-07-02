@@ -21,9 +21,9 @@ curl -X PATCH …/api/admin/projects/1/badge \
 Then drop the shields.io endpoint badge into your README:
 
 ```md file="README.md"
-![coverage](https://img.shields.io/endpoint?url=
-  https://coverage-tracker.yourdomain.com
-  /api/badge/owner/repo/coverage.json)
+![coverage](https://img.shields.io/endpoint?url=https://coverage-tracker.yourdomain.com/api/badge/owner/repo/coverage.json)
 ```
 
+<!-- site-only -->
 <span class="realbadge mono"><span class="l">coverage</span><span class="r">94%</span></span>
+<!-- /site-only -->

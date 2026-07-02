@@ -17,4 +17,23 @@ npx wrangler d1 execute DB --remote \
   --command "SELECT full_slug, default_branch, badge_enabled FROM projects"
 ```
 
-One row per account in `owners` and one per repo in `projects` means the install is complete. `badge_enabled` is `0` by default — opt in per repo below. If a table is empty, check `npx wrangler tail`; if owners has rows but projects is empty, trigger a manual resync via `POST /api/admin/resync`.
+One row per account in `owners` and one per repo in `projects` means the install is complete. `badge_enabled` is `0` by default — opt in per repo below.
+
+If `owners` is empty, the webhook was not received or failed before reaching the database — check the Worker logs with `npx wrangler tail`. If `owners` has rows but `projects` is empty, the App was likely installed with **All repositories** selected and the payload contained no repo list — trigger a manual resync (the installation id is the number at the end of the app's **Configure** URL):
+
+```bash file="resync"
+curl -X POST https://coverage-tracker.yourdomain.com/api/admin/resync \
+  -H "Cf-Access-Jwt-Assertion: <your-access-token>" \
+  -H "Content-Type: application/json" \
+  -d '{"installationId": YOUR_INSTALLATION_ID}'
+```
+
+> [!NOTE] If the webhook returns 500
+> Fix the issue shown by `npx wrangler tail`, clear the failed delivery from the dedup table, then redeliver from GitHub App → **Advanced → Recent Deliveries → Redeliver**:
+>
+> ```bash
+> npx wrangler d1 execute DB --remote \
+>   --command "DELETE FROM webhook_deliveries WHERE delivery_id = 'THE-DELIVERY-ID'"
+> ```
+
+With both tables populated, the Worker is ready to accept metrics — have CI produce a coverage report and let the reporting Action pick it up. See [Generating coverage reports](https://coveragetracker.dev/docs#generating-coverage-reports) for the per-language commands.

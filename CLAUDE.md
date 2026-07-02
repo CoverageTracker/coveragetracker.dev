@@ -10,9 +10,17 @@ pnpm build        # production build → .svelte-kit/cloudflare
 pnpm preview      # preview production build locally
 pnpm check        # svelte-kit sync + svelte-check (type checking)
 pnpm deploy       # build + wrangler pages deploy
+pnpm test         # vitest (remark plugins + docs exporter)
+pnpm export-docs <coverage-tracker-root>  # render .svx → downstream markdown
 ```
 
-There are no tests in this repo.
+## Docs are exported downstream
+
+`src/lib/docs-content/*.svx` is the origin of truth for shared docs. `scripts/export-docs.ts`
+renders configured files into `docs/generating-coverage-reports.md` and `docs/INSTALLATION.md`
+in the coverage-tracker repo (PR sync via `.github/workflows/export-docs.yml`). Never edit
+those generated files downstream. Content must stay dual-renderable: GFM tables and callouts
+work on GitHub too; wrap site-only markup in `<!-- site-only -->` … `<!-- /site-only -->`.
 
 ## Stack
 
