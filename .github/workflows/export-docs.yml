@@ -4,7 +4,7 @@
 # This repo is the origin of truth for shared docs content — the generated
 # files downstream (docs/generating-coverage-reports.md, docs/INSTALLATION.md)
 # must never be edited directly. See README.md § Docs export pipeline for the
-# COVERAGE_TRACKER_SYNC_TOKEN setup.
+# docs-sync GitHub App setup (DOCS_SYNC_APP_ID / DOCS_SYNC_APP_PRIVATE_KEY).
 name: Export docs
 
 on:
@@ -17,7 +17,6 @@ on:
   workflow_dispatch:
 
 permissions:
-  id-token: write
   contents: write
   pull-requests: write
 
@@ -25,6 +24,20 @@ jobs:
   export:
     runs-on: ubuntu-latest
     steps:
+      # Mint an installation token for the docs-sync GitHub App. A bot token is
+      # required for commit signing: create-pull-request's sign-commits builds
+      # commits via the GitHub API, which only signs them (as the app bot) when
+      # authenticated with a GitHub App token — a PAT leaves them unsigned.
+      # owner/repositories are mandatory to scope the token to the cross-org target repo.
+      - name: Generate GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.DOCS_SYNC_APP_ID }}
+          private-key: ${{ secrets.DOCS_SYNC_APP_PRIVATE_KEY }}
+          owner: CoverageTracker
+          repositories: coverage-tracker
+
       - name: Checkout coveragetracker.dev
         uses: actions/checkout@v4
 
@@ -32,16 +45,13 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: CoverageTracker/coverage-tracker
-          token: ${{ secrets.COVERAGE_TRACKER_SYNC_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
           path: target-repo
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 22
-
-      - name: Setup Gitsign
-        uses: chainguard-dev/actions/setup-gitsign@f0be69916b439d0fcced2451b23d0f27cd46d545 # v1.6.26
 
       - name: Export docs
         run: node --experimental-strip-types scripts/export-docs.ts target-repo
@@ -54,7 +64,7 @@ jobs:
           path: target-repo
           branch: docs-sync
           sign-commits: true
-          token: ${{ secrets.COVERAGE_TRACKER_SYNC_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
           commit-message: 'docs: sync generated docs from coveragetracker.dev'
           title: 'docs: sync generated docs from coveragetracker.dev'
           body: |
