@@ -32,6 +32,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: CoverageTracker/coverage-tracker
+          token: ${{ secrets.COVERAGE_TRACKER_SYNC_TOKEN }}
           path: target-repo
 
       - name: Setup Node
@@ -53,9 +54,9 @@ jobs:
           path: target-repo
           branch: docs-sync
           sign-commits: true
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "docs: sync generated docs from coveragetracker.dev"
-          title: "docs: sync generated docs from coveragetracker.dev"
+          token: ${{ secrets.COVERAGE_TRACKER_SYNC_TOKEN }}
+          commit-message: 'docs: sync generated docs from coveragetracker.dev'
+          title: 'docs: sync generated docs from coveragetracker.dev'
           body: |
             Automated docs sync from [coveragetracker.dev](https://github.com/CoverageTracker/coveragetracker.dev) (`${{ github.sha }}`).
 
