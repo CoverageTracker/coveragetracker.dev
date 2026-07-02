@@ -11,9 +11,9 @@ on:
   push:
     branches: [main]
     paths:
-      - 'src/lib/docs-content/*.svx'
-      - 'scripts/export-docs.ts'
-      - '.github/workflows/export-docs.yml'
+      - "src/lib/docs-content/*.svx"
+      - "scripts/export-docs.ts"
+      - ".github/workflows/export-docs.yml"
   workflow_dispatch:
 
 permissions:
@@ -39,6 +39,9 @@ jobs:
         with:
           node-version: 22
 
+      - name: Setup Gitsign
+        uses: chainguard-dev/actions/setup-gitsign@f0be69916b439d0fcced2451b23d0f27cd46d545 # v1.6.26
+
       - name: Export docs
         run: node --experimental-strip-types scripts/export-docs.ts target-repo
 
@@ -50,8 +53,9 @@ jobs:
           path: target-repo
           branch: docs-sync
           sign-commits: true
-          commit-message: 'docs: sync generated docs from coveragetracker.dev'
-          title: 'docs: sync generated docs from coveragetracker.dev'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "docs: sync generated docs from coveragetracker.dev"
+          title: "docs: sync generated docs from coveragetracker.dev"
           body: |
             Automated docs sync from [coveragetracker.dev](https://github.com/CoverageTracker/coveragetracker.dev) (`${{ github.sha }}`).
 
