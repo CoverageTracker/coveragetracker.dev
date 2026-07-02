@@ -17,7 +17,7 @@ From the account or org that will host the app, go to **Settings → Developer s
     <tr><td>Homepage URL</td><td><code>https://coverage-tracker.yourdomain.com</code></td></tr>
     <tr><td>Webhook → Active</td><td>checked</td></tr>
     <tr><td>Webhook URL</td><td><code>…/webhooks/github</code></td></tr>
-    <tr><td>Webhook secret</td><td>Generate 32 random bytes — save this value</td></tr>
+    <tr><td>Webhook secret</td><td>Generate 32 random bytes — save this value:<br /><code>node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"</code></td></tr>
   </tbody>
 </table>
 

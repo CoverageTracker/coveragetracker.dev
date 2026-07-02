@@ -5,15 +5,15 @@ title: Domain & database
 group: installation
 ---
 
-Create your D1 database, then wire its id into `wrangler.jsonc` and apply the schema migration.
+Create your D1 database, then wire its id into `wrangler.json` and apply the schema migration.
 
 ```bash file="create D1"
 npx wrangler d1 create coverage
 ```
 
-Copy the `database_id` from the output into the `d1_databases` entry of `wrangler.jsonc`:
+Copy the `database_id` from the output into the `d1_databases` entry of `wrangler.json`:
 
-```jsonc file="wrangler.jsonc"
+```jsonc file="wrangler.json"
 {
   // ...
   "d1_databases": [
@@ -35,4 +35,4 @@ npm run db:migrate:remote
 ```
 
 > [!NOTE] Note
-> The committed `wrangler.jsonc` intentionally omits `database_id` so the Deploy to Cloudflare button can provision D1 automatically. For manual installs, add the field as shown.
+> The committed `wrangler.json` intentionally omits `database_id` so the Deploy to Cloudflare button can provision D1 automatically. For manual installs, add the field as shown. The custom domain is attached in the Cloudflare dashboard after first deploy — no `routes` entry is needed.
